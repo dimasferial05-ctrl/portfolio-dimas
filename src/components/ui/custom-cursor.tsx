@@ -77,7 +77,7 @@ export function CustomCursor() {
       {cursorState === "default" && (
         <motion.div
           layoutId="cursor"
-          className="w-2.5 h-2.5 bg-primary rounded-full shadow-[0_0_8px_rgba(242,240,234,0.4)]"
+          className="w-2.5 h-2.5 bg-primary rounded-full"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.15 }}
@@ -97,7 +97,7 @@ export function CustomCursor() {
       {cursorState === "view" && (
         <motion.div
           layoutId="cursor"
-          className="px-3 py-1.5 bg-primary text-background font-semibold rounded-sm tracking-widest text-[11px] shadow-lg"
+          className="px-3 py-1.5 bg-primary text-background font-semibold rounded-sm tracking-widest text-[11px]"
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}

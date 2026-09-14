@@ -43,7 +43,7 @@ export function FloatingDock() {
         aria-label="Primary Navigation"
         className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 max-w-fit"
       >
-        <div className="flex items-center gap-1.5 px-3 py-2 bg-surface/90 backdrop-blur-md border border-border rounded-lg shadow-2xl">
+        <div className="flex items-center gap-1.5 px-3 py-2 bg-surface/90 backdrop-blur-md border border-border rounded-lg">
           {navItems.map((item, index) => {
             const Icon = item.icon;
             const isHovered = hoveredIndex === index;
@@ -64,7 +64,7 @@ export function FloatingDock() {
                     animate={{ opacity: 1, y: -38, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                     transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                    className="absolute left-1/2 -translate-x-1/2 px-2.5 py-1 bg-surface border border-border font-mono text-[11px] text-primary rounded shadow-lg pointer-events-none whitespace-nowrap"
+                    className="absolute left-1/2 -translate-x-1/2 px-2.5 py-1 bg-surface border border-border font-mono text-[11px] text-primary rounded pointer-events-none whitespace-nowrap"
                   >
                     {item.name}
                   </motion.div>
