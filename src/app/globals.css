@@ -12,6 +12,12 @@
     --accent: #E63946;
   }
 
+  @media (pointer: fine) {
+    html, body, a, button, [role="button"] {
+      cursor: none !important;
+    }
+  }
+
   body {
     background-color: #0C0C0C;
     color: #F2F0EA;

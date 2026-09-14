@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { CustomCursor } from "@/components/ui/custom-cursor";
+import { FloatingDock } from "@/components/navigation/floating-dock";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,10 +35,13 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-body bg-background text-primary antialiased`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-body bg-background text-primary antialiased relative min-h-screen`}
       >
+        <CustomCursor />
         {children}
+        <FloatingDock />
       </body>
     </html>
   );
 }
+

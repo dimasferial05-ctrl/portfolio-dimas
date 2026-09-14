@@ -12,14 +12,24 @@ export default function Home() {
         </h1>
 
         <p className="font-body text-secondary text-sm sm:text-base leading-relaxed">
-          Pondasi teknis portfolio interaktif telah siap. Konfigurasi design token, font Google, dan utilitas styling telah aktif.
+          Pondasi teknis portfolio interaktif telah siap. Konfigurasi design token, font Google, custom cursor, dan layout dock navigasi telah aktif.
         </p>
 
+        <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center items-center">
+          <div 
+            data-cursor="view" 
+            className="w-full sm:w-auto px-5 py-3 rounded-lg border border-border bg-surface/60 hover:border-accent/40 transition-colors text-xs font-mono text-secondary hover:text-primary cursor-none select-none"
+          >
+            [HOVER TO TEST VIEW CURSOR]
+          </div>
+        </div>
+
         <div className="pt-4 border-t border-border flex justify-between items-center text-xs font-mono text-secondary">
-          <span>DF / 2026</span>
+          <span>STATUS</span>
           <span className="text-primary font-medium">PHASE 01 : BASE READY</span>
         </div>
       </div>
     </main>
   );
 }
+
