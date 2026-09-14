@@ -36,7 +36,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
     <motion.div
       initial={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.5 } }}
-      className="fixed inset-0 z-50 flex flex-col items-start justify-center px-8 md:px-24 bg-background select-none pointer-events-none"
+      className="fixed inset-0 z-50 flex flex-col items-start justify-center px-8 md:px-24 bg-background select-none"
     >
       <div className="space-y-2 font-mono text-xs text-secondary">
         {bootLines.map((line, index) => (

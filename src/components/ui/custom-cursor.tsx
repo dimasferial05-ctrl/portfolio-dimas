@@ -1,7 +1,42 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, AnimatePresence, Variants, Transition } from "framer-motion";
+
+const cursorVariants: Variants = {
+  default: {
+    width: "10px",
+    height: "10px",
+    backgroundColor: "#F2F0EA",
+    borderColor: "rgba(242, 240, 234, 0)",
+    borderWidth: "0px",
+    borderRadius: "9999px",
+    backdropFilter: "blur(0px)",
+  },
+  hover: {
+    width: "32px",
+    height: "32px",
+    backgroundColor: "rgba(242, 240, 234, 0.1)",
+    borderColor: "rgba(242, 240, 234, 0.8)",
+    borderWidth: "1px",
+    borderRadius: "9999px",
+    backdropFilter: "blur(1px)",
+  },
+  view: {
+    width: "56px",
+    height: "26px",
+    backgroundColor: "#F2F0EA",
+    borderColor: "rgba(242, 240, 234, 0)",
+    borderWidth: "0px",
+    borderRadius: "2px",
+    backdropFilter: "blur(0px)",
+  },
+};
+
+const cursorTransition: Transition = {
+  duration: 0.2,
+  ease: [0.16, 1, 0.3, 1] as const,
+};
 
 export function CustomCursor() {
   const [isVisible, setIsVisible] = useState(false);
@@ -74,37 +109,27 @@ export function CustomCursor() {
         translateY: "-50%",
       }}
     >
-      {cursorState === "default" && (
-        <motion.div
-          layoutId="cursor"
-          className="w-2.5 h-2.5 bg-primary rounded-full"
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.15 }}
-        />
-      )}
-
-      {cursorState === "hover" && (
-        <motion.div
-          layoutId="cursor"
-          className="w-8 h-8 rounded-full border border-primary/80 bg-primary/10 backdrop-blur-[1px]"
-          initial={{ scale: 0.5, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        />
-      )}
-
-      {cursorState === "view" && (
-        <motion.div
-          layoutId="cursor"
-          className="px-3 py-1.5 bg-primary text-background font-semibold rounded-sm tracking-widest text-[11px]"
-          initial={{ scale: 0.5, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        >
-          VIEW
-        </motion.div>
-      )}
+      <motion.div
+        variants={cursorVariants}
+        animate={cursorState}
+        transition={cursorTransition}
+        className="flex items-center justify-center overflow-hidden border"
+      >
+        <AnimatePresence>
+          {cursorState === "view" && (
+            <motion.span
+              key="view-text"
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.6 }}
+              transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] as const }}
+              className="text-background font-semibold tracking-widest text-[10px] select-none"
+            >
+              VIEW
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </motion.div>
     </motion.div>
   );
 }
