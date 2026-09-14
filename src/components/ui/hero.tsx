@@ -115,6 +115,7 @@ export function Hero() {
           href="/cv.pdf"
           target="_blank"
           rel="noopener noreferrer"
+          data-cursor="download"
           className="inline-flex items-center justify-center px-6 py-3 border border-border bg-transparent font-mono text-xs text-secondary hover:text-primary hover:border-accent transition-colors duration-300 cursor-none select-none"
         >
           [ DOWNLOAD CV ]

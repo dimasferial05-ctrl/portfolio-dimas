@@ -31,6 +31,15 @@ const cursorVariants: Variants = {
     borderRadius: "2px",
     backdropFilter: "blur(0px)",
   },
+  download: {
+    width: "82px",
+    height: "26px",
+    backgroundColor: "#F2F0EA",
+    borderColor: "rgba(242, 240, 234, 0)",
+    borderWidth: "0px",
+    borderRadius: "2px",
+    backdropFilter: "blur(0px)",
+  },
 };
 
 const cursorTransition: Transition = {
@@ -40,7 +49,7 @@ const cursorTransition: Transition = {
 
 export function CustomCursor() {
   const [isVisible, setIsVisible] = useState(false);
-  const [cursorState, setCursorState] = useState<"default" | "hover" | "view">("default");
+  const [cursorState, setCursorState] = useState<"default" | "hover" | "view" | "download">("default");
 
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
@@ -72,10 +81,13 @@ export function CustomCursor() {
       const target = e.target as HTMLElement | null;
       if (!target) return;
 
+      const downloadTarget = target.closest('[data-cursor="download"]');
       const viewTarget = target.closest('[data-cursor="view"]');
       const interactiveTarget = target.closest('a, button, [role="button"], input, textarea, select, [data-cursor="pointer"]');
 
-      if (viewTarget) {
+      if (downloadTarget) {
+        setCursorState("download");
+      } else if (viewTarget) {
         setCursorState("view");
       } else if (interactiveTarget) {
         setCursorState("hover");
@@ -123,9 +135,21 @@ export function CustomCursor() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.6 }}
               transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] as const }}
-              className="text-background font-semibold tracking-widest text-[10px] select-none"
+              className="text-background font-semibold tracking-widest text-[10px] select-none whitespace-nowrap"
             >
               VIEW
+            </motion.span>
+          )}
+          {cursorState === "download" && (
+            <motion.span
+              key="download-text"
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.6 }}
+              transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] as const }}
+              className="text-background font-semibold tracking-widest text-[10px] select-none whitespace-nowrap"
+            >
+              DOWNLOAD
             </motion.span>
           )}
         </AnimatePresence>
