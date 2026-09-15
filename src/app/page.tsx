@@ -6,6 +6,7 @@ import { Preloader } from "@/components/ui/preloader";
 import { Hero } from "@/components/ui/hero";
 import { About } from "@/components/ui/About";
 import { TechStack } from "@/components/ui/TechStack";
+import { SelectedWorks } from "@/components/ui/SelectedWorks";
 
 export default function Home() {
   const [isBooting, setIsBooting] = useState(true);
@@ -26,6 +27,7 @@ export default function Home() {
             <Hero />
             <About />
             <TechStack />
+            <SelectedWorks />
           </motion.div>
         )}
       </AnimatePresence>
