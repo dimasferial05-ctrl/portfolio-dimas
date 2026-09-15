@@ -48,7 +48,7 @@ const Cell = React.memo(function Cell({
   return (
     <div
       onClick={() => onCellClick(row, col)}
-      className="relative w-12 h-12 md:w-14 md:h-14 border-r border-b border-[rgba(242,240,234,0.05)] transition-colors duration-500 hover:duration-0 hover:bg-[rgba(242,240,234,0.08)] cursor-pointer group"
+      className="relative w-12 h-12 md:w-14 md:h-14 border-r border-b border-[rgba(242,240,234,0.05)] transition-colors duration-500 hover:duration-0 hover:bg-[rgba(242,240,234,0.08)] cursor-none group"
     >
       {/* Ripple wave highlight */}
       <motion.div
