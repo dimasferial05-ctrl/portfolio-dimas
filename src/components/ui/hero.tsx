@@ -49,6 +49,7 @@ export function Hero() {
 
   return (
     <motion.section
+      id="home"
       variants={containerVariants}
       initial="hidden"
       animate="visible"

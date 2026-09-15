@@ -1,119 +1,98 @@
-# Phase 2 (V2): Preloader Counter & Hero Section with Aceternity Ripple
+# Pembuatan Komponen UI Bagian Kedua: About Section & Tech Stack Section
 
-**Project**: DIMAS.DEV — Interactive Developer Portfolio
-**Target**: Mengimplementasikan komponen Preloader berbasis counter angka dan Hero Section yang menggunakan Aceternity Background Ripple Effect serta typography text flip animasi.
-
-## Instruksi untuk Implementator
-Ikuti langkah-langkah di bawah ini secara persis. Anggap ini adalah instruksi mutlak. **DILARANG** berimprovisasi dengan warna, jenis font, atau gaya animasi di luar panduan. Semua animasi framer-motion harus terasa lambat, presisi, dan elegan tanpa ada efek mantul (*bouncy*). Konsep utamanya adalah "Ma" (negative space).
-
-### Step 1: Instalasi Dependensi & Persiapan Komponen
-1. Pastikan `framer-motion` dan tool penunjang Tailwind (seperti `clsx`, `tailwind-merge`) sudah tersedia jika dibutuhkan untuk komponen Aceternity.
-2. Buat file-file komponen berikut di dalam `src/components/ui/` (jika belum ada):
-   - `preloader.tsx`
-   - `hero.tsx`
-   - `ripple.tsx` (Untuk komponen Background Ripple Effect).
-
-### Step 2: Implementasi Background Ripple Effect (`src/components/ui/ripple.tsx`)
-1. Salin kode komponen dasar dari [Aceternity Background Ripple Effect](https://ui.aceternity.com/components/background-ripple-effect).
-2. **MODIFIKASI PENTING (SYARAT MUTLAK)**:
-   - Sesuaikan *opacity* garis gelombang menjadi sangat tipis (maksimal 5% atau opacity `0.05`).
-   - Gunakan warna garis putih/abu-abu transparan agar menyatu halus dengan background hitam murni (`#0C0C0C`).
-   - Ubah konfigurasi animasi (seperti penambahan delay antar ripple atau durasi yang lebih panjang) agar pergerakannya **SANGAT LAMBAT**. Efek airnya tidak boleh agresif atau mengganggu keterbacaan (menjaga prinsip "Ma").
-
-### Step 3: Implementasi Preloader (`src/components/ui/preloader.tsx`)
-
-**Spesifikasi:**
-- **Tampilan**: Layar penuh (`fixed inset-0 z-50 flex items-center justify-center`) dengan background gelap murni (`bg-[#0C0C0C]`). Tidak tembus klik (block pointer events).
-- **Konten**: Angka persentase besar (misalnya `text-5xl md:text-7xl`) di tengah layar.
-- **Tipografi**: Font monospace (`font-mono`) menggunakan JetBrains Mono, warna utama/putih atau abu-abu terang.
-- **State Logic**: Gunakan `useState` dan `useEffect` untuk membuat logika counter (0-100%) dengan rentang waktu sekitar 1.5 - 2 detik.
-- **Exit**: Setelah mencapai angka 100%, berikan jeda sedikit, lalu panggil callback `onComplete()` agar komponen hilang dengan transisi `fade-out`.
-
-**Contoh Logic Counter:**
-```tsx
-const [counter, setCounter] = useState(0);
-
-useEffect(() => {
-  const interval = setInterval(() => {
-    setCounter((prev) => {
-      if (prev >= 100) {
-        clearInterval(interval);
-        setTimeout(onComplete, 400); // Jeda sebelum fade-out agar 100% terbaca
-        return 100;
-      }
-      return prev + Math.floor(Math.random() * 10) + 2; // Hitungan naik secara acak agar natural
-    });
-  }, 40);
-
-  return () => clearInterval(interval);
-}, [onComplete]);
-```
-
-### Step 4: Implementasi Komponen Hero (`src/components/ui/hero.tsx`)
-
-**Layout:**
-- Wrapper utama: `min-h-screen`, flex flex-col justify-center items-start, tata letak **rata kiri** (left-aligned) dengan padding lega (misal `px-8 md:px-24`).
-- Tambahkan komponen `<Ripple />` di lapisan paling bawah container Hero (posisi absolut/relative dengan `z-index` yang lebih rendah dari konten teks).
-
-**Daftar Teks yang Berotasi (Text Flip):**
-Ganti bagian dalam kurung `I BUILD [ ... ]` menggunakan array berikut secara infinite loop (interval ~2500ms):
-1. `"WEB APPLICATIONS"`
-2. `"INTERACTIVE PRODUCTS"`
-3. `"USER EXPERIENCES"`
-4. `"IOT ECOSYSTEMS"`
-
-**Exact Framer-Motion Variants (WAJIB DIPAKAI):**
-
-*1. Text Flip Animasi (Untuk teks dalam `<AnimatePresence mode="wait">`):*
-```typescript
-const flipVariants = {
-  initial: { y: 20, opacity: 0 },
-  animate: { y: 0, opacity: 1 },
-  exit: { y: -20, opacity: 0 },
-};
-const flipTransition = { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const };
-```
-
-*2. Entry Animasi / Staggered Delay untuk Elemen Konten Hero:*
-```typescript
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { 
-    opacity: 1, 
-    transition: { staggerChildren: 0.2, delayChildren: 0.1 } 
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const } 
-  }
-};
-```
-Berikan `variants={containerVariants}` dengan `initial="hidden"` dan `animate="visible"` pada elemen bungkus utamanya. Berikan `variants={itemVariants}` pada setiap anak elemen di bawah ini.
-
-**Struktur Elemen Konten:**
-1. **Status Badge:** Teks monospace ukuran kecil `[ STATUS: SYSTEM ONLINE ]` dengan sebuah titik bulat berwarna Vermilion (`#E63946`) yang diberi efek `animate-pulse`.
-2. **Giant Heading:** Teks `DIMAS FERIAL HIDAYAT.` memakai font Space Grotesk (`font-sans`), berukuran raksasa (`text-5xl md:text-8xl lg:text-9xl`), dan berwarna utama.
-3. **Animated Subheading:** Awalan teks `I BUILD ` diikuti komponen animasi teks (dari state text flip). Font memakai Space Grotesk.
-4. **Body Text:** Teks `Software Developer · Frontend Enthusiast.` menggunakan font Inter (`font-body`) warna teks abu-abu (`#A3A09A`).
-5. **Call to Action (CTA) Group:** Dua tombol diletakkan sejajar berdekatan (flex gap):
-   - `[ VIEW MY WORK ]`
-   - `[ DOWNLOAD CV ]`
-   - *Style Tombol:* Minimalis, tanpa fill background (transparan), garis border sangat tipis 1px berwarna netral gelap (`#292929`), font monospace.
-   - *Hover Efek:* Ketika disentuh/di-hover, warna border/garis bawah harus bertransisi halus menjadi warna Vermilion (`#E63946`) dengan durasi sekitar `300ms`.
-
-### Step 5: Penggabungan di `src/app/page.tsx`
-Bersihkan konten halaman dan pasang orkestrasi antara `<Preloader />` dan `<Hero />`. Render preloader jika state `isBooting` true, kemudian beralih ke `<Hero />` menggunakan `<AnimatePresence mode="wait">` agar transisi pergantian layar mulus.
+**Tujuan:** Mengimplementasikan dua seksi baru pada halaman portfolio `DIMAS.DEV` yaitu "About Section" dan "Tech Stack Section", dengan tetap mematuhi filosofi desain minimalis "Ma" (negative space).
 
 ---
 
-## Kriteria Selesai (Definition of Done)
-- [x] Preloader counter angka berjalan 0-100% dan langsung fade-out dengan mulus.
-- [x] Background efek Ripple Aceternity terpasang dengan pergerakan SANGAT LAMBAT dan SANGAT SUBTLE (opacity <= 5%).
-- [x] Animasi elemen konten Hero masuk dengan stagger delay arah vertikal lambat (*ease-out* presisi `[0.16, 1, 0.3, 1]`) dan *tanpa* ada pantulan.
-- [x] Animasi rotasi Text Flip berputar 4 iterasi teks secara infinite tanpa henti.
-- [x] CTA Group menampilkan 2 tombol sejajar, yang apabila di-hover memunculkan warna aksen merah Vermilion.
+## 1. About Section (Asymmetrical Layout)
+
+Seksi ini akan menggunakan layout asimetris dengan ruang kosong (*negative space*) yang dominan dan animasi scroll yang halus.
+
+### Detail Kebutuhan:
+- **Lokasi File:** Buat file komponen baru di `src/components/ui/About.tsx`.
+- **Layout Dasar:** 
+  - Gunakan grid 12 kolom (misalnya: `grid grid-cols-1 md:grid-cols-12`).
+  - Berikan padding vertikal masif (minimal `py-32` atau `py-48` pada kontainer utama).
+- **Sisi Kiri (Kolom 1-5) - "Pixelated Canvas":**
+  - Buat komponen visual interaktif abstrak.
+  - Tampilan berupa grid kotak-kotak kecil yang padat (dirangkai sedemikian rupa menjadi canvas).
+  - **Logic Interaksi Hover (Explicit):**
+    - Render grid menggunakan *array mapping* (misal 100 elemen kotak).
+    - Tiap `div` kotak bisa mengandalkan CSS statis dengan state lokal atau lebih mudah menggunakan efek transisi CSS `hover`: ubah warna `bg` sesaat saat kursor menyentuh (`onMouseEnter` atau pseudo-class `:hover`) dan gunakan `transition-duration` yang agak lambat untuk kembali ke warna semula (efek *trailing/fading*).
+    - Styling wajib: Latar belakang gelap (`#141414`), border sangat tipis (`#292929`), dan efek nyala dengan aksen *subtle* transparan.
+- **Sisi Kanan (Kolom 7-12) - Konten Teks:**
+  - **Metadata Tag:** `01 / ABOUT` (Font: JetBrains Mono / `font-mono`, ukuran: `text-xs`, warna abu-abu/sekunder).
+  - **Heading:** `I design and build digital experiences that feel simple.` (Font: Space Grotesk / `font-sans`, ukuran dominan misal `text-4xl`, warna primer `#F2F0EA`).
+  - **Paragraf:** `Currently studying Information and Computer Technology (D4) at Politeknik Negeri Subang. I focus on bridging the gap between elegant engineering and beautiful user interfaces. My philosophy leans heavily into deliberate subtraction; stripping away unnecessary decoration until only purposeful interaction and clarity remain.` (Font: Inter / `font-body`, warna sekunder `#A3A09A`).
+
+### Animasi Scroll (Framer Motion):
+- Seluruh teks (Metadata, Heading, Paragraf) harus muncul secara bertahap (*staggered fade-in*) dan menggeser posisinya dari `y: 20` ke `y: 0` **hanya ketika** area tersebut masuk ke dalam layar (*viewport*).
+- **Exact Props (whileInView) untuk Elemen Teks:**
+  ```tsx
+  import { motion } from "framer-motion";
+
+  // Bungkus elemen dengan motion.div:
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-100px" }}
+    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} // smooth ease-out curve
+  >
+    {/* Konten */}
+  </motion.div>
+  ```
+- **Aturan Ketat:** Dilarang keras menggunakan animasi memantul (*bouncy* / `spring`). Gunakan selalu bezier curve lambat yang terlihat elegan (`ease: [0.16, 1, 0.3, 1]`).
+
+---
+
+## 2. Tech Stack Section
+
+Seksi ini menampilkan keahlian teknologi secara *infinite loop* horizontal.
+
+### Detail Kebutuhan:
+- **Lokasi File:** Buat file komponen baru di `src/components/ui/TechStack.tsx`.
+- **Header Seksi:** `02 / TECHNOLOGIES I WORK WITH` (Font: JetBrains Mono / `font-mono`, ukuran: `text-xs`).
+- **Komponen Utama (Marquee):**
+  - Implementasikan menggunakan atau terinspirasi dari komponen UI Aceternity **"Infinite Moving Cards"**.
+  - Daftar Teknologi: `"REACT", "NEXT.JS", "TYPESCRIPT", "TAILWIND CSS", "FIGMA", "GIT"`.
+- **Styling Item (Editorial Tag):**
+  - **Panduan Ketat Integrasi:** Buang semua kode *box-shadow*, *drop-shadow*, atau *background gradient* kompleks yang sering menjadi default di UI libraries.
+  - Kartu harus dirender mendatar (flat style).
+  - Latar belakang sangat gelap (`#141414`), border sangat tipis (`#292929`), font JetBrains Mono, warna teks sekunder, tanpa shadow sama sekali.
+
+---
+
+## Langkah-langkah Eksekusi (Untuk Diikuti Junior Programmer / AI Assistant)
+
+1. **Pembuatan Struktur File:**
+   - Buat `src/components/ui/About.tsx`.
+   - Buat `src/components/ui/TechStack.tsx`.
+   - Impor dan letakkan kedua komponen ini di halaman utama (misal `src/app/page.tsx`), persis di bawah komponen Hero (atau preloader).
+
+2. **Implementasi `About.tsx`:**
+   - Gunakan `className="grid grid-cols-1 md:grid-cols-12 gap-8 py-32"` sebagai kontainer utama.
+   - **Bagian Kiri:** Bangun komponen "Pixelated Canvas". Bikin `div` yang menampilkan `grid` atau `flex-wrap` berisikan `div` kecil-kecil dengan styling base: `w-6 h-6 border border-[#292929] bg-[#141414]`. Sisipkan class `hover:bg-[warna-nyala] transition-colors duration-500 hover:duration-0`.
+   - **Bagian Kanan:** Susun Metadata, Heading, dan Paragraf. Bungkus masing-masing elemen dengan `<motion.div>` yang menyematkan *exact framer-motion props* yang disediakan di atas. Untuk efek berurutan (*stagger*), bisa dengan menambahkan delay bertingkat pada transition (misal `delay: 0`, `delay: 0.1`, `delay: 0.2`).
+
+3. **Implementasi `TechStack.tsx`:**
+   - Persiapkan struktur infinite marquee UI (atau install library Aceternity-nya).
+   - Pastikan styling kartu menyesuaikan arahan *Editorial Tag* (batas tipis & flat).
+   - Letakkan Header seksinya dengan margin yang estetik sebelum teks berjalan.
+
+4. **Finishing Touch:**
+   - Cek silang seluruh desain di browser (termasuk perilaku di mode mobile/layar kecil).
+   - Hindari ornamen tidak perlu; patuhi panduan estetika minimalisme "Ma".
+
+---
+
+## Status Pengerjaan (Definition of Done)
+- [x] Komponen `src/components/ui/About.tsx` dibuat dengan layout asimetris 12-kolom dan padding vertikal masif (`py-32 md:py-48`).
+- [x] Komponen "Pixelated Canvas" interaktif pada kolom 1-5 dengan grid kotak bernuansa gelap `#141414`, border tipis `#292929`, dan hover illumination trailing halus.
+- [x] Konten teks About pada kolom 7-12 (Metadata `01 / ABOUT`, Heading `I design and build digital experiences that feel simple.`, dan Paragraf deskripsi).
+- [x] Animasi scroll `whileInView` framer-motion yang halus dan elegan tanpa efek bouncy (`ease: [0.16, 1, 0.3, 1]`).
+- [x] Komponen `src/components/ui/TechStack.tsx` dibuat dengan Header `02 / TECHNOLOGIES I WORK WITH`.
+- [x] Aceternity Infinite Moving Cards (Marquee) scroll horizontal tanpa batas untuk item `REACT`, `NEXT.JS`, `TYPESCRIPT`, `TAILWIND CSS`, `FIGMA`, `GIT`.
+- [x] Item teknologi dirender flat editorial tag dengan background `#141414`, border `#292929`, font JetBrains Mono, tanpa shadow.
+- [x] Komponen diintegrasikan ke `src/app/page.tsx` di bawah Hero.
+- [x] Linting & build Next.js lulus 100% tanpa error.
+

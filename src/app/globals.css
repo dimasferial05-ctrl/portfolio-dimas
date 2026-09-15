@@ -12,6 +12,10 @@
     --accent: #E63946;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   @media (pointer: fine) {
     html, body, a, button, [role="button"] {
       cursor: none !important;
@@ -44,3 +48,17 @@
     opacity: 0.03;
   }
 }
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll var(--animation-duration, 25s) linear infinite;
+}
+
