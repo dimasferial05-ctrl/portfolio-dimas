@@ -15,7 +15,7 @@ export function About() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const, delay: 0 }}
           className="md:col-span-5"
         >
@@ -32,7 +32,7 @@ export function About() {
             {/* Aceternity UI Pixelated Canvas */}
             <div className="flex justify-center items-center overflow-hidden bg-[#000000]">
               <PixelatedCanvas
-                src="https://assets.aceternity.com/manu-red.png"
+                src="/me.jpeg"
                 width={400}
                 height={500}
                 cellSize={3}
@@ -70,7 +70,7 @@ export function About() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const, delay: 0.05 }}
           >
             <span className="font-mono text-xs text-secondary tracking-widest uppercase block mb-4">
@@ -82,7 +82,7 @@ export function About() {
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const, delay: 0.15 }}
             className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.15] text-primary tracking-tight"
           >
@@ -93,7 +93,7 @@ export function About() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const, delay: 0.25 }}
             className="font-body text-base md:text-lg leading-relaxed text-secondary mt-8 max-w-xl"
           >

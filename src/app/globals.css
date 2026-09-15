@@ -59,6 +59,6 @@
 }
 
 .animate-scroll {
-  animation: scroll var(--animation-duration, 25s) linear infinite;
+  animation: scroll var(--animation-duration, 25s) var(--animation-direction, forwards) linear infinite;
 }
 
